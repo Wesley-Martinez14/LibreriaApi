@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+
+  db:
+    image: postgres:latest
+    ports:
+      - "5433:5432"
+    container_name: postgres_containerLIB
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=libreriadb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Caasd21215@@
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin_containerLIB
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "postgres@example.com"
+      PGADMIN_DEFAULT_PASSWORD: "Caasd21215@@"
+    ports:
+      - "8082:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - db
+  
+
+  web:
+    build: .
+    container_name: libreria_container
+    command: python libreriaR/manage.py runserver 0.0.0.0:8080
+    volumes:
+      - .:/app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
+
+volumes:
+  postgres_data:
+  pgadmin_data:
