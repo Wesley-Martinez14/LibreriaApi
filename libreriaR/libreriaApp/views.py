@@ -1,6 +1,26 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
+from rest_framework import viewsets
+from .models import Autor, Categoria, Libro, Cliente, Prestamo
+from .serializer import AutorSerializer, CategoriaSerializer, LibroSerializer, ClienteSerializer, PrestamoSerializer
 
-def vista(request):
-    return HttpResponse("hola")
+class AutorViewSet(viewsets.ModelViewSet):
+    queryset = Autor.objects.all()
+    serializer_class = AutorSerializer
+
+class CategoriaViewSet(viewsets.ModelViewSet):
+    queryset = Categoria.objects.all()
+    serializer_class = CategoriaSerializer
+
+class LibroViewSet(viewsets.ModelViewSet):
+    queryset = Libro.objects.all()
+    serializer_class = LibroSerializer
+
+class ClienteViewSet(viewsets.ModelViewSet):
+    queryset = Cliente.objects.all()
+    serializer_class = ClienteSerializer
+
+class PrestamoViewSet(viewsets.ModelViewSet):
+    queryset = Prestamo.objects.all()
+    serializer_class = PrestamoSerializer
