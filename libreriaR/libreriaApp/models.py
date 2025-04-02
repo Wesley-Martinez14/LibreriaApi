@@ -37,7 +37,7 @@ class Prestamo(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     libro = models.ForeignKey(Libro, on_delete=models.CASCADE)
     fecha_prestamo = models.DateField(auto_now_add=True)
-    fecha_devolucion = models.DateField(blank=True, null=True)
+    fecha_devolucion = models.DateField(null=True)
     devuelto = models.BooleanField(default=False)
 
     def __str__(self):

@@ -12,8 +12,8 @@ class CategoriaSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class LibroSerializer(serializers.ModelSerializer):
-    autor = AutorSerializer(read_only=True)
-    categoria = CategoriaSerializer(read_only=True)
+    autor = serializers.PrimaryKeyRelatedField(queryset=Autor.objects.all())
+    categoria = serializers.PrimaryKeyRelatedField(queryset=Categoria.objects.all(), allow_null=True)
 
     class Meta:
         model = Libro
@@ -25,9 +25,9 @@ class ClienteSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class PrestamoSerializer(serializers.ModelSerializer):
-    cliente = ClienteSerializer(read_only=True)
-    libro = LibroSerializer(read_only=True)
-
+    cliente = serializers.PrimaryKeyRelatedField(queryset=Cliente.objects.all())
+    libro = serializers.PrimaryKeyRelatedField(queryset=Libro.objects.all())
+    
     class Meta:
         model = Prestamo
         fields = ['id', 'cliente', 'libro', 'fecha_prestamo', 'fecha_devolucion', 'devuelto']
