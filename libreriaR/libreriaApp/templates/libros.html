@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Libros</title>
+</head>
+<body>
+    <h1>Lista de Libros</h1>
+    <a href="/">Volver al inicio</a>
+    <div id="libros"></div>
+    <script>
+        fetch('/api/libros/')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('libros').innerHTML = data.map(libro => `<p>${libro.titulo} - ${libro.autor}</p>`).join('');
+            });
+    </script>
+</body>
+</html>

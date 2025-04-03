@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categorías</title>
+</head>
+<body>
+    <h1>Lista de Categorías</h1>
+    <a href="/">Volver al inicio</a>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+            </tr>
+        </thead>
+        <tbody id="categorias-list"></tbody>
+    </table>
+    <script>
+        fetch('/api/categorias/')
+            .then(response => response.json())
+            .then(data => {
+                let tbody = document.getElementById('categorias-list');
+                data.forEach(categoria => {
+                    let row = `<tr><td>${categoria.id}</td><td>${categoria.nombre}</td></tr>`;
+                    tbody.innerHTML += row;
+                });
+            });
+    </script>
+</body>
+</html>

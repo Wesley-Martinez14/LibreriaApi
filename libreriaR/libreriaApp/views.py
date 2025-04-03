@@ -24,3 +24,23 @@ class ClienteViewSet(viewsets.ModelViewSet):
 class PrestamoViewSet(viewsets.ModelViewSet):
     queryset = Prestamo.objects.all()
     serializer_class = PrestamoSerializer
+
+
+def clientes_view(request):
+    return render(request, 'clientes.html')
+
+def categorias_view(request):
+    return render(request, 'categorias.html')
+
+def prestamos_view(request):
+    return render(request, 'prestamos.html')
+
+def autores_view(request):
+    return render(request, 'autores.html')
+
+def libros_view(request):
+    return render(request, 'libros.html')
+
+
+def index(request):
+    return render(request, 'index.html')

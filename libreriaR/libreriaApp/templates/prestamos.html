@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Préstamos</title>
+</head>
+<body>
+    <h1>Lista de Préstamos</h1>
+    <a href="/">Volver al inicio</a>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Libro</th>
+                <th>Fecha Préstamo</th>
+                <th>Fecha Devolución</th>
+                <th>Devuelto</th>
+            </tr>
+        </thead>
+        <tbody id="prestamos-list"></tbody>
+    </table>
+    <script>
+        fetch('/api/prestamos/')
+            .then(response => response.json())
+            .then(data => {
+                let tbody = document.getElementById('prestamos-list');
+                data.forEach(prestamo => {
+                    let row = `<tr><td>${prestamo.id}</td><td>${prestamo.cliente}</td><td>${prestamo.libro}</td><td>${prestamo.fecha_prestamo}</td><td>${prestamo.fecha_devolucion ? prestamo.fecha_devolucion : 'No devuelto'}</td><td>${prestamo.devuelto ? 'Sí' : 'No'}</td></tr>`;
+                    tbody.innerHTML += row;
+                });
+            });
+    </script>
+</body>
+</html>

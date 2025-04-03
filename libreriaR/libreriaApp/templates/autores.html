@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Autores</title>
+</head>
+<body>
+    <h1>Lista de Autores</h1>
+    <a href="/">Volver al inicio</a>
+    <div id="autores"></div>
+    <script>
+        fetch('/api/autores/')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('autores').innerHTML = data.map(autor => `<p>${autor.nombre}</p>`).join('');
+            });
+    </script>
+</body>
+</html>
