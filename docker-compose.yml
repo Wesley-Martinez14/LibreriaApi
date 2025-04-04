@@ -27,7 +27,11 @@ services:
     depends_on:
       - db
   
-
+  redis:
+    container_name: redis_LIB
+    image: redis:latest
+    ports:
+      - "8081:6379"
   web:
     build: .
     container_name: libreria_container
