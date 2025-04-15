@@ -25,7 +25,7 @@ resource "docker_image" "postgres" {
   name = "postgres:latest"
 }
 
-resource "docker_container" "postgres_container" {
+resource "docker_container" "postgres_containerLIB" {
   name  = "db"
   image = docker_image.postgres.name
 
@@ -58,7 +58,7 @@ resource "docker_image" "redis" {
   name = "redis:latest"
 }
 
-resource "docker_container" "redis_container" {
+resource "docker_container" "redis_LIB" {
   name  = "redis_LIB"
   image = docker_image.redis.name
 
@@ -80,7 +80,7 @@ resource "docker_image" "pgadmin" {
   name = "dpage/pgadmin4:latest"
 }
 
-resource "docker_container" "pgadmin_container" {
+resource "docker_container" "pgadmin_containerLIB" {
   name  = "pgadmin_containerLIB"
   image = docker_image.pgadmin.name
 
@@ -99,7 +99,7 @@ resource "docker_container" "pgadmin_container" {
     host_path      = abspath("${path.module}/pgadmin_data")
   }
 
-  depends_on = [docker_container.postgres_container]
+  depends_on = [docker_container.postgres_containerLIB]
 
   networks_advanced {
     name = docker_network.libreria_network.name
@@ -135,8 +135,8 @@ resource "docker_container" "django_container" {
   }
 
   depends_on = [
-    docker_container.postgres_container,
-    docker_container.redis_container
+    docker_container.postgres_containerLIB,
+    docker_container.redis_LIB
   ]
 
   networks_advanced {
