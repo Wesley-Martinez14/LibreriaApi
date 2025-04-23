@@ -1,0 +1,7 @@
+# Terraform state
+*.tfstate
+*.tfstate.*
+terraform.tfvars
+postgres_data/
+pgadmin_data/
+

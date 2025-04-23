@@ -1,3 +1,4 @@
+# Configuración del proveedor Docker
 terraform {
   required_providers {
     docker = {
@@ -9,94 +10,77 @@ terraform {
 
 provider "docker" {}
 
-#######################
-# NETWORK SHARED
-#######################
-
+# Red compartida
 resource "docker_network" "libreria_network" {
-  name = "libreria_network"
+  name = var.network_name
 }
 
-#######################
-# POSTGRES CONTAINER
-#######################
-
+# PostgreSQL
 resource "docker_image" "postgres" {
-  name = "postgres:latest"
+  name = var.postgres_image
 }
 
 resource "docker_container" "postgres_containerLIB" {
-  name  = "db"
+  name  = var.postgres_container_name
   image = docker_image.postgres.name
 
   ports {
-    internal = 5432
-    external = 5433
+    internal = var.postgres_ports["internal"]
+    external = var.postgres_ports["external"]
   }
 
-  env = [
-    "POSTGRES_DB=libreriadb",
-    "POSTGRES_USER=postgres",
-    "POSTGRES_PASSWORD=Caasd21215@@"
-  ]
+  env = [for key, value in var.postgres_env : "${key}=${value}"]
 
   volumes {
     container_path = "/var/lib/postgresql/data/"
-    host_path      = abspath("${path.module}/postgres_data")
+    host_path      = abspath(var.postgres_volume_path)
   }
 
   networks_advanced {
     name = docker_network.libreria_network.name
   }
+
 }
 
-#######################
-# REDIS CONTAINER
-#######################
-
+# Redis
 resource "docker_image" "redis" {
-  name = "redis:latest"
+  name = var.redis_image
 }
 
 resource "docker_container" "redis_LIB" {
-  name  = "redis_LIB"
+  name  = var.redis_container_name
   image = docker_image.redis.name
 
   ports {
-    internal = 6379
-    external = 8081
+    internal = var.redis_ports["internal"]
+    external = var.redis_ports["external"]
   }
 
   networks_advanced {
     name = docker_network.libreria_network.name
   }
+
 }
 
-#######################
-# PGADMIN CONTAINER
-#######################
-
+# PgAdmin
 resource "docker_image" "pgadmin" {
-  name = "dpage/pgadmin4:latest"
+  name = var.pgadmin_image
 }
 
 resource "docker_container" "pgadmin_containerLIB" {
-  name  = "pgadmin_containerLIB"
+  name  = var.pgadmin_container_name
   image = docker_image.pgadmin.name
 
   ports {
-    internal = 80
-    external = 8082
+    internal = var.pgadmin_ports["internal"]
+    external = var.pgadmin_ports["external"]
   }
 
-  env = [
-    "PGADMIN_DEFAULT_EMAIL=postgres@example.com",
-    "PGADMIN_DEFAULT_PASSWORD=Caasd21215@@"
-  ]
+  env = [for key, value in var.pgadmin_env : "${key}=${value}"]
 
   volumes {
     container_path = "/var/lib/pgadmin"
-    host_path      = abspath("${path.module}/pgadmin_data")
+    host_path      = abspath(var.pgadmin_volume_path)
   }
 
   depends_on = [docker_container.postgres_containerLIB]
@@ -104,36 +88,34 @@ resource "docker_container" "pgadmin_containerLIB" {
   networks_advanced {
     name = docker_network.libreria_network.name
   }
+  
 }
 
-#######################
-# DJANGO CONTAINER
-#######################
-
+# Django
 resource "docker_image" "django_app" {
-  name = "libreria_local"
+  name = var.django_image
 
   build {
-    context = "${path.module}"
+    context = abspath("${path.module}")
   }
 }
 
 resource "docker_container" "django_container" {
-  name  = "libreria_container"
+  name  = var.django_container_name
   image = docker_image.django_app.name
 
-  command = ["sh", "-c", "python libreriaR/manage.py makemigrations && python libreriaR/manage.py migrate && python libreriaR/manage.py runserver 0.0.0.0:8080"]
+  command = var.django_command
 
   ports {
-    internal = 8080
-    external = 8080
+    internal = var.django_ports["internal"]
+    external = var.django_ports["external"]
   }
 
-  volumes {
-    container_path = "/app"
-    host_path      = abspath("${path.module}")
-  }
-
+  #volumes {
+   # container_path = "/app"
+   # host_path      = abspath(var.django_volume_path)
+  #}
+  
   depends_on = [
     docker_container.postgres_containerLIB,
     docker_container.redis_LIB
