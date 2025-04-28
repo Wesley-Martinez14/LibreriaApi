@@ -30,12 +30,14 @@ variable "postgres_ports" {
 variable "postgres_env" {
   description = "Variables de entorno para PostgreSQL"
   type        = map(string)
+  sensitive   = true
 }
 
 variable "postgres_volume_path" {
   description = "Ruta del volumen para PostgreSQL"
   type        = string
   default     = "./postgres_data"
+  sensitive   = true
 }
 
 # Variables para Redis
@@ -85,6 +87,7 @@ variable "pgadmin_ports" {
 variable "pgadmin_env" {
   description = "Variables de entorno para PgAdmin"
   type        = map(string)
+  sensitive   = true
   default = {
     PGADMIN_DEFAULT_EMAIL    = "postgres@example.com"
     PGADMIN_DEFAULT_PASSWORD = "Caasd21215@@"
@@ -95,6 +98,7 @@ variable "pgadmin_volume_path" {
   description = "Ruta del volumen para PgAdmin"
   type        = string
   default     = "./pgadmin_data"
+  sensitive   = true
 }
 
 # Variables para Django

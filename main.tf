@@ -88,7 +88,7 @@ resource "docker_container" "pgadmin_containerLIB" {
   networks_advanced {
     name = docker_network.libreria_network.name
   }
-  
+
 }
 
 # Django
@@ -112,10 +112,10 @@ resource "docker_container" "django_container" {
   }
 
   #volumes {
-   # container_path = "/app"
-   # host_path      = abspath(var.django_volume_path)
+  # container_path = "/app"
+  # host_path      = abspath(var.django_volume_path)
   #}
-  
+
   depends_on = [
     docker_container.postgres_containerLIB,
     docker_container.redis_LIB
