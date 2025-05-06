@@ -1,0 +1,1 @@
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"app","Source":"./modules/django_app","Dir":"modules/django_app"},{"Key":"db","Source":"./modules/db","Dir":"modules/db"}]}
