@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Autor, Categoria, Libro, Cliente, Prestamo
+from .utils import enviar_webhook_n8n
 
 class AutorSerializer(serializers.ModelSerializer):
     class Meta:
@@ -31,3 +32,21 @@ class PrestamoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Prestamo
         fields = ['id', 'cliente', 'libro', 'fecha_prestamo', 'fecha_devolucion', 'devuelto']
+
+    def create(self, validated_data):
+        instance = super().create(validated_data)
+    
+        payload={
+            "tipo_evento": "Nuevo Prestamo Registrado",
+            "prestamo_id": instance.id,
+            "cliente_id": instance.cliente.id,
+            "cliente_info": getattr(instance.cliente, 'nombre', 'N/A'),
+            "libro_id": instance.libro.id,
+            "libro_titulo": getattr(instance.libro, 'titulo', 'N/A'), 
+            "fecha_prestamo": str(instance.fecha_prestamo),
+            "devuelto": instance.devuelto,
+        }
+
+        enviar_webhook_n8n(payload)
+
+        return instance

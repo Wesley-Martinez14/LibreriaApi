@@ -71,6 +71,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'libreriaRest.wsgi.application'
+N8N_WEBHOOK_URL = "https://riwes1403.app.n8n.cloud/webhook/b5f24b14-c0f3-49b9-ba51-204f83776ec9"
 
 
 # Database
