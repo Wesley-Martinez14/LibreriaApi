@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-pmdw0&z&_lp086sz8n^re6c6b0p(i3cnrrj=@=$f59_-3x3d#&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'web']
 
 
 # Application definition
@@ -71,7 +71,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'libreriaRest.wsgi.application'
-N8N_WEBHOOK_URL = "https://riwes1403.app.n8n.cloud/webhook/b5f24b14-c0f3-49b9-ba51-204f83776ec9"
+N8N_WEBHOOK_URL = "http://n8n:5678/webhook/139237a5-7933-4fe2-9032-b5f2200e101d" #revisar el link de produccion que proporcione n8n
 
 
 # Database
