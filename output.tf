@@ -14,5 +14,6 @@ output "service_urls" {
     django_app_url = "http://localhost:${module.app.django_container_port}"
     pgadmin_url    = "http://localhost:${module.db.pgadmin_port}"
     redis_url      = "redis://localhost:${module.db.redis_port}"
+    n8n_url        = "http://localhost:${module.n8n_app.n8n_port}"
   }
 }

@@ -41,3 +41,22 @@ module "app" {
   depends_on_postgres = module.db
   depends_on_redis    = module.db
 }
+
+module "n8n_app" {
+  source = "./modules/n8n_app"
+
+  # Variables de configuración del contenedor
+  network_name       = var.network_name
+  n8n_image          = var.n8n_image
+  n8n_container_name = var.n8n_container_name
+  n8n_ports          = var.n8n_ports
+
+  # Variables de Basic Auth para el contenedor
+  n8n_auth_user     = var.n8n_auth_user
+  n8n_auth_password = var.n8n_auth_password
+  
+  # Dependemos de la red para asegurar que existe
+  depends_on = [
+    module.db
+  ]
+}

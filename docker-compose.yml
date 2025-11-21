@@ -63,8 +63,18 @@ services:
     volumes:
       - n8n_data:/home/node/.n8n
 
+  appsmith:
+     image: appsmith/appsmith-ee
+     container_name: appsmith
+     ports:
+         - "8085:80"
+         - "444:443"
+     volumes:
+         - appsmith_data:/stacks:/appsmith-stacks
+     restart: unless-stopped
 
 volumes:
   postgres_data:
   pgadmin_data:
   n8n_data:
+  appsmith_data:

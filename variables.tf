@@ -137,3 +137,37 @@ variable "django_command" {
     "python libreriaR/manage.py makemigrations && python libreriaR/manage.py migrate && python libreriaR/manage.py runserver 0.0.0.0:8080"
   ]
 }
+
+variable "n8n_image" {
+  description = "Imagen Docker para n8n"
+  type        = string
+  default     = "n8nio/n8n:latest"
+}
+
+variable "n8n_container_name" {
+  description = "Nombre del contenedor n8n"
+  type        = string
+  default     = "n8n_lib_notifier"
+}
+
+variable "n8n_ports" {
+  description = "Puertos para n8n (internal, external)"
+  type        = map(number)
+  default = {
+    internal = 5678
+    external = 5678
+  }
+}
+
+variable "n8n_auth_user" {
+  description = "Usuario de autenticación básica de n8n (N8N_BASIC_AUTH_USER)"
+  type        = string
+  default     = "admin" # Valor por defecto de tu docker-compose
+  sensitive   = true
+}
+
+variable "n8n_auth_password" {
+  description = "Contraseña de autenticación básica de n8n (N8N_BASIC_AUTH_PASSWORD)"
+  type        = string
+  sensitive   = true
+}

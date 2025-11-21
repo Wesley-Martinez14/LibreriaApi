@@ -1,1 +1,1 @@
-{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"app","Source":"./modules/django_app","Dir":"modules/django_app"},{"Key":"db","Source":"./modules/db","Dir":"modules/db"}]}
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"app","Source":"./modules/django_app","Dir":"modules/django_app"},{"Key":"db","Source":"./modules/db","Dir":"modules/db"},{"Key":"n8n_app","Source":"./modules/n8n_app","Dir":"modules/n8n_app"}]}
